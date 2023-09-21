@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors: 
+    missing_required_param: error
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+    - lib/**.config.dart
