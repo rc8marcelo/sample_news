@@ -10,7 +10,8 @@ class NewsSource with _$NewsSource {
     required String name,
   }) = _NewsSource;
 
-  ///Creates a [NewsSource] model from [json]
   factory NewsSource.fromJson(Map<String, dynamic> json) =>
       _$NewsSourceFromJson(json);
+
+  factory NewsSource.mock() => const NewsSource(name: 'Google');
 }

@@ -12,7 +12,7 @@ abstract class INewsRepo {
   Future<ApiResult<NewsApiResponse>> getHeadlines({required int page});
 }
 
-@LazySingleton(as: INewsRepo)
+@LazySingleton(as: INewsRepo, env: [Environment.prod])
 class NewsRepo implements INewsRepo {
   final NewsApiClient newsClient;
   const NewsRepo(this.newsClient);

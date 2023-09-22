@@ -17,15 +17,12 @@ class CardWithImage extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {},
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            children: [
-              image,
-              child,
-            ],
-          ),
+        onTap: onTap,
+        child: Column(
+          children: [
+            image,
+            child,
+          ],
         ),
       ),
     );

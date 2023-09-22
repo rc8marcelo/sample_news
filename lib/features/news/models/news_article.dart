@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_news/resources/resources.dart';
 
 import 'news_source.dart';
 
@@ -26,6 +27,13 @@ class NewsArticle with _$NewsArticle {
   factory NewsArticle.fromJson(Map<String, dynamic> json) =>
       _$NewsArticleFromJson(json);
 
+  factory NewsArticle.mock() => NewsArticle(
+        url: 'www.google.com',
+        title: 'Some title',
+        source: NewsSource.mock(),
+        publishedAt: DateTime(2000, 12, 31),
+      );
+
   LabelValueList get asLabeledText => [
         (label: 'Description', content: description ?? 'No data'),
         (label: 'Link', content: url),
@@ -38,9 +46,7 @@ class NewsArticle with _$NewsArticle {
         (label: 'Author', content: author ?? 'No data'),
       ];
 
-  String get imageUrl =>
-      urlToImage ??
-      'https://static.vecteezy.com/system/resources/thumbnails/006/299/370/original/world-breaking-news-digital-earth-hud-rotating-globe-rotating-free-video.jpg';
+  String get imageUrl => urlToImage ?? Constants.defaultImageUrl;
 }
 
 extension NewsArticleListX on List<NewsArticle> {
