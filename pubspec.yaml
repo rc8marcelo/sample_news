@@ -26,6 +26,7 @@ dependencies:
   url_launcher: 6.1.14
   intl: 0.18.1
   drag_and_drop_lists: 0.3.3
+  mocktail: 1.0.0
 
 dev_dependencies:
   flutter_test:

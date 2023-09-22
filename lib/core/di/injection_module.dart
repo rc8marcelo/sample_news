@@ -5,7 +5,7 @@ import 'package:sample_news/features/news/data/news_client.dart';
 
 @module
 abstract class ExternalLibraryDependencies {
-  @lazySingleton
+  @LazySingleton(env: [Environment.prod])
   Dio get dioInstance => DioUtils.createDioInsteance();
 
   @LazySingleton(env: [Environment.prod])
