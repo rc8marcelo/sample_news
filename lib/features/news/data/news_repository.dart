@@ -29,7 +29,7 @@ class NewsRepo implements INewsRepo {
         return ApiResultFailure(
             ApiUnknownFailure(Exception('Invalid JSON response')));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       return ApiResultFailure(ApiUnknownFailure(e));
     }
   }

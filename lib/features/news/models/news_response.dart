@@ -15,7 +15,13 @@ class NewsApiResponse with _$NewsApiResponse {
     String? message,
   }) = _NewsApiResponse;
 
-  ///Creates a [NewsApiResponse] model from [json]
   factory NewsApiResponse.fromJson(Map<String, dynamic> json) =>
       _$NewsApiResponseFromJson(json);
+
+  factory NewsApiResponse.mock(bool isSuccessful) => NewsApiResponse(
+        message: isSuccessful ? null : 'Forbidden',
+        status: isSuccessful ? 'ok' : 'error',
+        articles: [NewsArticle.mock()],
+        totalResults: 1,
+      );
 }
