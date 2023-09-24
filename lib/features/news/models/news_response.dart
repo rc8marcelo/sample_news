@@ -18,10 +18,14 @@ class NewsApiResponse with _$NewsApiResponse {
   factory NewsApiResponse.fromJson(Map<String, dynamic> json) =>
       _$NewsApiResponseFromJson(json);
 
-  factory NewsApiResponse.mock(bool isSuccessful) => NewsApiResponse(
+  factory NewsApiResponse.mock(
+    bool isSuccessful, {
+    List<NewsArticle>? newsArticles,
+  }) =>
+      NewsApiResponse(
         message: isSuccessful ? null : 'Forbidden',
         status: isSuccessful ? 'ok' : 'error',
-        articles: [NewsArticle.mock()],
+        articles: newsArticles ?? [NewsArticle.mock()],
         totalResults: 1,
       );
 }
