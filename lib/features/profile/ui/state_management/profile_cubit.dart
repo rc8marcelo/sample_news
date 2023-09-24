@@ -8,43 +8,45 @@ import 'package:injectable/injectable.dart';
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
 
+//As replacement for a backend - mocked data
+const tReorderableItems = [
+  (
+    title: 'Favorites',
+    items: [
+      'Some Favorite 1',
+      'Some Favorite 2',
+      'Some Favorite 3',
+    ],
+  ),
+  (
+    title: 'Watched articles',
+    items: [
+      'Some Watching 1',
+      'Some Watching 2',
+      'Some Watching 3',
+    ],
+  ),
+  (
+    title: 'Articles to read',
+    items: [
+      'Some Read 1',
+      'Some Read 2',
+      'Some Read 3',
+    ],
+  ),
+];
+
 @injectable
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(ProfileState.initial());
+  ProfileCubit() : super(const ProfileState.ready(sections: []));
 
   void init() {
-    final items = [
-      (
-        title: 'Favorites',
-        items: [
-          'Some Favorite 1',
-          'Some Favorite 2',
-          'Some Favorite 3',
-        ],
-      ),
-      (
-        title: 'Watched articles',
-        items: [
-          'Some Watching 1',
-          'Some Watching 2',
-          'Some Watching 3',
-        ],
-      ),
-      (
-        title: 'Articles to read',
-        items: [
-          'Some Read 1',
-          'Some Read 2',
-          'Some Read 3',
-        ],
-      ),
-    ];
-    final list = items
+    final list = tReorderableItems
         .map(
           (e) => generateListSection(e.title, e.items),
         )
         .toList();
-    emit(state.copyWith(sections: list));
+    emit(ProfileState.ready(sections: list));
   }
 
   void onItemReorder(
@@ -53,44 +55,44 @@ class ProfileCubit extends Cubit<ProfileState> {
     int newItemIndex,
     int newListIndex,
   ) {
-    emit(state.copyWith(isProcessing: true));
     final newList = currentList;
+    emit(ProfileState.processing(sections: newList));
     final movedItem = newList[oldListIndex].children.removeAt(oldItemIndex);
     newList[newListIndex].children.insert(newItemIndex, movedItem);
-    emit(state.copyWith(isProcessing: false, sections: newList));
+    emit(ProfileState.ready(sections: newList));
   }
 
   void onListReorder(
     int oldListIndex,
     int newListIndex,
   ) {
-    emit(state.copyWith(isProcessing: true));
     final newList = currentList;
+    emit(ProfileState.processing(sections: newList));
     final movedList = newList.removeAt(oldListIndex);
     newList.insert(newListIndex, movedList);
-    emit(state.copyWith(isProcessing: false, sections: newList));
+    emit(ProfileState.ready(sections: newList));
   }
 
   void onItemAdd(DragAndDropItem newItem, int listIndex, int itemIndex) {
-    emit(state.copyWith(isProcessing: true));
     final newList = currentList;
+    emit(ProfileState.processing(sections: newList));
     if (itemIndex == -1) {
       newList[listIndex].children.add(newItem);
     } else {
       newList[listIndex].children.insert(itemIndex, newItem);
     }
-    emit(state.copyWith(isProcessing: false, sections: newList));
+    emit(ProfileState.ready(sections: newList));
   }
 
   void onListAdd(DragAndDropListInterface newList, int listIndex) {
-    emit(state.copyWith(isProcessing: true));
     final newList = currentList;
+    emit(ProfileState.processing(sections: newList));
     if (listIndex == -1) {
       newList.add(newList as DragAndDropList);
     } else {
       newList.insert(listIndex, newList as DragAndDropList);
     }
-    emit(state.copyWith(isProcessing: false, sections: newList));
+    emit(ProfileState.ready(sections: newList));
   }
 
   DragAndDropList generateListSection(String title, List<String> items) {
@@ -123,5 +125,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   List<DragAndDropList> get currentList =>
-      List<DragAndDropList>.from(state.sections);
+      List<DragAndDropList>.from(state.maybeWhen(
+        ready: (sections) => sections,
+        orElse: () => [],
+      ));
 }

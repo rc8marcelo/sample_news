@@ -4,13 +4,9 @@ typedef ReorderableLabeledList = ({String title, List<String> items});
 
 @freezed
 class ProfileState with _$ProfileState {
-  const factory ProfileState({
-    required List<DragAndDropList> sections,
-    required bool isProcessing,
-  }) = _Initial;
+  const factory ProfileState.ready({required List<DragAndDropList> sections}) =
+      _Ready;
 
-  factory ProfileState.initial() => const ProfileState(
-        sections: [],
-        isProcessing: false,
-      );
+  const factory ProfileState.processing(
+      {required List<DragAndDropList> sections}) = _Processing;
 }

@@ -32,7 +32,10 @@ class ProfileBody extends StatelessWidget {
                 onListReorder: context.read<ProfileCubit>().onListReorder,
                 onItemAdd: context.read<ProfileCubit>().onItemAdd,
                 onListAdd: context.read<ProfileCubit>().onListAdd,
-                children: state.sections,
+                children: state.when(
+                  ready: (s) => s,
+                  processing: (s) => s,
+                ),
               ),
             );
           },
