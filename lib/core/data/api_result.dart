@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sample_news/core/data/api_failure.dart';
+import 'package:sample_news/core/data/failure.dart';
 
 sealed class ApiResult<T> extends Equatable {}
 

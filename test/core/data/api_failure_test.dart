@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:sample_news/core/data/api_failure.dart';
+import 'package:sample_news/core/data/failure.dart';
 
 void main() {
   group(

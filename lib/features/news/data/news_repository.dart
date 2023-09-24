@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:sample_news/core/data/api_failure.dart';
+import 'package:sample_news/core/data/failure.dart';
 import 'package:sample_news/core/data/api_result.dart';
 import 'package:sample_news/features/news/data/news_client.dart';
 
