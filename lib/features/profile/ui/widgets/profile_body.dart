@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sample_news/features/common/widgets/app_logo.dart';
 import 'package:sample_news/features/profile/ui/state_management/profile_cubit.dart';
 
 class ProfileBody extends StatelessWidget {
@@ -11,11 +12,18 @@ class ProfileBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppLogo(isLarge: true),
+          ],
+        ),
+        const SizedBox(height: 24),
         Text(
           'Hello, John Doe!',
           style: Theme.of(context).textTheme.headlineLarge,
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 16),
         BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             return Expanded(

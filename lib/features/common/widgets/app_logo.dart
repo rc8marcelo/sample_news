@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sample_news/resources/resources.dart';
 
 class AppLogo extends StatelessWidget {
-  const AppLogo({super.key});
+  final bool isLarge;
+
+  const AppLogo({
+    this.isLarge = false,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +16,14 @@ class AppLogo extends StatelessWidget {
         Icon(
           Icons.now_widgets_rounded,
           color: Theme.of(context).primaryColor,
+          size: isLarge ? 72 : null,
         ),
-        const Text(Strings.appName),
+        Text(
+          Strings.appName,
+          style: isLarge
+              ? Theme.of(context).textTheme.displayMedium
+              : Theme.of(context).textTheme.titleLarge,
+        ),
       ],
     );
   }

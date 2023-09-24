@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sample_news/core/routing/routes.dart';
 import 'package:sample_news/features/news/models/news_article.dart';
@@ -13,14 +14,35 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.newsDetails,
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final article = state.extra as NewsArticle;
-        return ScreenNewsDetails(article: article);
+        return CustomTransitionPage(
+          child: ScreenNewsDetails(article: article),
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              SharedAxisTransition(
+            transitionType: SharedAxisTransitionType.horizontal,
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          ),
+        );
       },
     ),
     GoRoute(
       path: Routes.profile,
-      builder: (context, state) => const ScreenProfile(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const ScreenProfile(),
+        transitionDuration: const Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            SharedAxisTransition(
+          transitionType: SharedAxisTransitionType.scaled,
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        ),
+      ),
     ),
   ],
 );
