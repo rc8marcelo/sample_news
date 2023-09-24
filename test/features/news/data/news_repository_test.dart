@@ -61,8 +61,6 @@ void main() {
       () async {
         //* Arrange
         final tModel = NewsApiResponse.mock(false).copyWith(status: 'A');
-        final tException = Exception('Invalid JSON response');
-        final tFailure = ApiUnknownFailure(tException);
         mockApiResponse(tModel);
 
         //* Act
