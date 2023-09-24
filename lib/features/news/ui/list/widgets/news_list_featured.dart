@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sample_news/core/routing/routes.dart';
 import 'package:sample_news/features/common/widgets/card_with_image.dart';
 import 'package:sample_news/features/common/widgets/custom_network_image.dart';
 import 'package:sample_news/features/news/ui/list/state_management/news_cubit.dart';
+import 'package:sample_news/resources/resources.dart';
 
 class NewsListFeatured extends StatelessWidget {
   const NewsListFeatured({super.key});
@@ -28,20 +30,30 @@ class NewsListFeatured extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.featuredArticle!.title,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        'Featured',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.withColor(Theme.of(context).colorScheme.primary),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        state.featuredArticle!.description ?? '',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        state.featuredArticle!.title,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
+                      if (state.featuredArticle?.description != null)
+                        const SizedBox(height: 8),
+                      if (state.featuredArticle?.description != null)
+                        Text(
+                          state.featuredArticle!.description ?? '',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                     ],
                   ),
                 ),
-              );
+              ).animate(effects: Effects.forwardZoomFadeTransition);
       },
     );
   }

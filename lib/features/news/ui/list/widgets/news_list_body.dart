@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sample_news/features/common/widgets/loader.dart';
@@ -57,7 +58,17 @@ class _NewsListBodyState extends State<NewsListBody> {
               pagingController: pagingController,
               builderDelegate: PagedChildBuilderDelegate<NewsArticle>(
                 itemBuilder: (context, item, index) =>
-                    NewsListItem(article: item),
+                    NewsListItem(article: item)
+                        .animate(delay: 100.ms)
+                        .fadeIn(duration: 600.ms, delay: 200.ms)
+                        .shimmer(
+                          blendMode: BlendMode.srcOver,
+                          color: Colors.white12,
+                        )
+                        .move(
+                          begin: const Offset(-16, 0),
+                          curve: Curves.easeOutQuad,
+                        ),
                 newPageErrorIndicatorBuilder: (_) => const NewsListErrorItem(),
                 noItemsFoundIndicatorBuilder: (_) => const NewsListError(),
                 firstPageProgressIndicatorBuilder: (_) => const Loader(),
